@@ -4,6 +4,7 @@ const mongoose=require('mongoose');
 const app=express();
 const Cliente = require('./Cliente');
 const Mascota = require('./Mascota');
+const Citas = require('./Citas');
 
 //Settings 
 app.set('port',process.env.PORT||3600);
@@ -102,8 +103,8 @@ app.get("/eliminarMascota/:id", async(req, res) =>{
   // CITAS //    
 
 //Traer todas las citas
-app.get("/VerCitas/:cb",async (req, res)=>{
-    const cita = await cita.findOne({IdCita:req.params.cb});
+app.get("/VerCitas",async (req, res)=>{
+    const cita = await Citas.findOne({IdCita:req.params.cb});
     res.render('Citas', {cita});
 });
 
@@ -115,26 +116,26 @@ app.post('/AgregarCita', async(req,res)=>{
 });
 
 //Consultar una sola cita
-app.get("/verCita/:id",async (req, res)=>{
-    const cita = await cita.findOne({IdCita:req.params.id});
+app.get("/verCita",async (req, res)=>{
+    const cita = await Citas.findOne({IdCita:req.params.id});
     res.render('EditarCita', {cita});
 });
     
 //Actualizar la cita de alguna de las mascotas
-app.post("/ActualizarCita/:cb", async(req, res) =>{
-    await cita.findOneAndUpdate({IdCita:req.params.cb}, req.body);
+app.post("/ActualizarCita", async(req, res) =>{
+    await Citas.findOneAndUpdate({IdCita:req.params.cb}, req.body);
     res.redirect("/verCitas");
 });
 
 //Elimina todas las citas
 app.get("/eliminarCitas", async(req, res) =>{
-    await cita.deleteMany();
+    await Citas.deleteMany();
     res.redirect("/verCitas");
 });
 
 //Eliminar una sola cita
-app.get("/eliminarCita/:cb", async(req, res) =>{
-    await cita.findOneAndDelete({IdCita:req.params.cb});
+app.get("/eliminarCita", async(req, res) =>{
+    await Citas.findOneAndDelete({IdCita:req.params.cb});
     res.redirect("/verCitas");
 });
 
