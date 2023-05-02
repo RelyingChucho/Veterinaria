@@ -5,6 +5,7 @@ const app=express();
 const Cliente = require('./Cliente');
 const Mascota = require('./Mascota');
 const Citas = require('./Citas');
+const Consulta = require('./Consulta');
 
 //Settings 
 app.set('port',process.env.PORT||3600);
@@ -137,5 +138,44 @@ app.get("/eliminarCitas", async(req, res) =>{
 app.get("/eliminarCita", async(req, res) =>{
     await Citas.findOneAndDelete({IdCita:req.params.cb});
     res.redirect("/verCitas");
+});
+
+//---------------CONSULTAS----------------
+
+//Traer todas las consultas
+app.get("/verConsultas",async (req, res)=>{
+    const consultas = await Consulta.find();
+    res.render('Consultas', {consultas});
+});
+
+//Insertar Mascota llegada
+app.post("/insertarConsultas",async(req,res)=>{
+    const consultaInsertada = new Consulta(req.body);
+    await consultaInsertada.save();
+    res.redirect("/verConsultas");
+});
+
+//Consultar una sola Mascota
+app.get("/verConsulta/:id",async (req, res)=>{
+    const consulta = await Consulta.findOne({id_Consulta:req.params.id});
+    res.render('EditarConsultas', {consulta});
+});
+
+//Actualizar datos de Mascota
+app.post("/actualizarConsulta/:id", async(req, res) =>{
+    await Consulta.findOneAndUpdate({id_Consulta:req.params.id}, req.body);
+    res.redirect("/verConsultas");
+});
+
+//Elimina todas las Mascotas
+app.get("/eliminarConsultas", async(req, res) =>{
+    await Consulta.deleteMany();
+    res.redirect("/verConsultas");
+});
+
+//Eliminar una mascota
+app.get("/eliminarConsulta/:id", async(req, res) =>{
+    await Consulta.findOneAndDelete({id_Consulta:req.params.id});
+    res.redirect("/verConsultas");
 });
 
