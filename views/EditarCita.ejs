@@ -68,7 +68,7 @@
                 <!--Aqui va el formulario de registro-->
                 <div class="card">
                     <div class="card-body">
-                        <form action="/ActualizarCita/<%= cita.IdCita %>" method="post">
+                        <form action="/actualizarCita/<%= cita.IdCita %>" method="post">
                             <div class="row">
                                 <div class="col-lg-4">
                                     <label for="txtIdCita" class="form-label">Id Cita</label>
@@ -82,11 +82,11 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <label for="txtnombre_mascota" class="form-label">Nombre de la mascota</label>
-                                    <input type="text" id="txtnombre_mascota" class="form-control" name="nombre_mascota" value="<%= Citas.nombre_mascota %>">
+                                    <input type="text" id="txtnombre_mascota" class="form-control" name="nombre_mascota" value="<%= cita.nombre_mascota %>">
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="txtraza" class="form-label">Raza</label>
-                                    <input type="text" id="txtraza" class="form-control" name="raza" value="<%= Citas.raza %>">
+                                    <input type="text" id="txtraza" class="form-control" name="raza" value="<%= cita.raza %>">
                                 </div>
                             </div>
                             <div class="row mb-2">

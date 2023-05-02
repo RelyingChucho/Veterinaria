@@ -104,9 +104,9 @@ app.get("/eliminarMascota/:id", async(req, res) =>{
   // CITAS //    
 
 //Traer todas las citas
-app.get("/VerCitas",async (req, res)=>{
-    const cita = await Citas.findOne({IdCita:req.params.cb});
-    res.render('Citas', {cita});
+app.get("/verCitas",async (req, res)=>{
+    const citas = await Citas.find();
+    res.render('Citas', {citas});
 });
 
 //Agregar o insertar una nueva cita
@@ -117,16 +117,17 @@ app.post('/AgregarCita', async(req,res)=>{
 });
 
 //Consultar una sola cita
-app.get("/verCita",async (req, res)=>{
+app.get("/verCita/:id",async (req, res)=>{
     const cita = await Citas.findOne({IdCita:req.params.id});
     res.render('EditarCita', {cita});
 });
     
 //Actualizar la cita de alguna de las mascotas
-app.post("/ActualizarCita", async(req, res) =>{
+app.post("/actualizarCita/:cb", async(req, res) =>{
     await Citas.findOneAndUpdate({IdCita:req.params.cb}, req.body);
     res.redirect("/verCitas");
 });
+
 
 //Elimina todas las citas
 app.get("/eliminarCitas", async(req, res) =>{
