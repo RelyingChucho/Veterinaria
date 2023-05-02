@@ -3,6 +3,7 @@ const morgan=require('morgan');
 const mongoose=require('mongoose');
 const app=express();
 const Cliente = require('./Cliente');
+const Mascota = require('./Mascota');
 
 //Settings 
 app.set('port',process.env.PORT||3600);
@@ -57,4 +58,43 @@ app.get("/eliminarClientes", async(req, res) =>{
 app.get("/eliminarCliente/:cb", async(req, res) =>{
     await Cliente.findOneAndDelete({id_Cliente:req.params.cb});
     res.redirect("/verClientes");
+});
+
+//----------------------------------MASCOTAS---------------------------------
+
+//Traer todas las mascotas
+app.get("/verMascotas",async (req, res)=>{
+    const mascotas = await Mascota.find();
+    res.render('Mascotas', {mascotas});
+});
+
+//Insertar Mascota llegada
+app.post("/insertarMascota",async(req,res)=>{
+    const mascotaInsert = new Mascota(req.body);
+    await mascotaInsert.save();
+    res.redirect("/verMascotas");
+});
+
+//Consultar una sola Mascota
+app.get("/verMascota/:id",async (req, res)=>{
+    const mascota = await Mascota.findOne({id_Mascota:req.params.id});
+    res.render('EditarMascota', {mascota});
+});
+
+//Actualizar datos de Mascota
+app.post("/actualizarMascota/:id", async(req, res) =>{
+    await Mascota.findOneAndUpdate({id_Mascota:req.params.id}, req.body);
+    res.redirect("/verMascotas");
+});
+
+//Elimina todas las Mascotas
+app.get("/eliminarMascotas", async(req, res) =>{
+    await Mascota.deleteMany();
+    res.redirect("/verMascotas");
+});
+
+//Eliminar una mascota
+app.get("/eliminarMascota/:id", async(req, res) =>{
+    await Mascota.findOneAndDelete({id_Mascota:req.params.id});
+    res.redirect("/verMascotas");
 });
