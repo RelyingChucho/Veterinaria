@@ -101,22 +101,28 @@ app.get("/eliminarMascota/:id", async(req, res) =>{
 
   // CITAS //    
 
-//Agregar una nueva cita
+//Traer todas las citas
+app.get("/VerCitas/:cb",async (req, res)=>{
+    const cita = await cita.findOne({IdCita:req.params.cb});
+    res.render('Citas', {cita});
+});
+
+//Agregar o insertar una nueva cita
 app.post('/AgregarCita', async(req,res)=>{
     const citaAgregada = new Citas(req.body);
     await citaAgregada.save();
     res.redirect("/verCitas");
 });
 
-//Encontrar la cita de una mascota
-app.get("/VerCitas/:cb",async (req, res)=>{
-    const cita = await cita.findOne({idCita:req.params.cb});
-    res.render('CitasExistentes', {cita});
+//Consultar una sola cita
+app.get("/verCita/:id",async (req, res)=>{
+    const cita = await cita.findOne({IdCita:req.params.id});
+    res.render('EditarCita', {cita});
 });
-
-//Modificar la cita de alguna de las mascotas
-app.post("/modificarCita/:cb", async(req, res) =>{
-    await cita.findOneAndUpdate({idCita:req.params.cb}, req.body);
+    
+//Actualizar la cita de alguna de las mascotas
+app.post("/ActualizarCita/:cb", async(req, res) =>{
+    await cita.findOneAndUpdate({IdCita:req.params.cb}, req.body);
     res.redirect("/verCitas");
 });
 
@@ -128,7 +134,7 @@ app.get("/eliminarCitas", async(req, res) =>{
 
 //Eliminar una sola cita
 app.get("/eliminarCita/:cb", async(req, res) =>{
-    await cita.findOneAndDelete({idCita:req.params.cb});
+    await cita.findOneAndDelete({IdCita:req.params.cb});
     res.redirect("/verCitas");
 });
 
