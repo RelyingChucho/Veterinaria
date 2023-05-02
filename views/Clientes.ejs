@@ -26,7 +26,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Ventas</a>
+                  <a class="nav-link active" aria-current="page" href="#">Clientes</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">Link</a>
@@ -131,12 +131,12 @@
                         <td><%= cliente.telefono %></td>
                         <td><%= cliente.correo %></td>
                         <td>
-                            <a href="/<%= cliente.id_Cliente %>" class="btn btn-warning">
+                            <a href="/verCliente/<%= cliente.id_Cliente %>" class="btn btn-warning">
                                 <i class="material-icons">edit</i>
                             </a>
                         </td>
                         <td>
-                            <a href="/eliminar/<%= cliente.id_Cliente %>" class="btn btn-danger">
+                            <a href="/eliminarCliente/<%= cliente.id_Cliente %>" class="btn btn-danger">
                                 <i class="material-icons">delete</i>
                             </a>
                         </td>

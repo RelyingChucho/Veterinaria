@@ -35,8 +35,26 @@ app.post("/insertarCliente",async(req,res)=>{
     res.redirect("/verClientes");
 });
 
-//Elimina todas las ventas
+//Consultar un solo Cliente
+app.get("/verCliente/:cb",async (req, res)=>{
+    const cliente = await Cliente.findOne({id_Cliente:req.params.cb});
+    res.render('EditarCliente', {cliente});
+});
+
+//Actualizar los Clientes
+app.post("/actualizarCliente/:cb", async(req, res) =>{
+    await Cliente.findOneAndUpdate({id_Cliente:req.params.cb}, req.body);
+    res.redirect("/verClientes");
+});
+
+//Elimina todos los Clientes
 app.get("/eliminarClientes", async(req, res) =>{
     await Cliente.deleteMany();
+    res.redirect("/verClientes");
+});
+
+//Eliminar un Cliente
+app.get("/eliminarCliente/:cb", async(req, res) =>{
+    await Cliente.findOneAndDelete({id_Cliente:req.params.cb});
     res.redirect("/verClientes");
 });
